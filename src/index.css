@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: all .3s ease;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    caret-color: #80ff72;
+}
+
+::-moz-selection {
+    background-color: rgba(60, 255, 40, 0.1);
+    color: #80ff72
+}
+
+::selection {
+    background-color: rgba(60, 255, 40, 0.1);
+    color: #80ff72
+}
+
+body {
+    background-color: rgb(4, 4, 4);
+}

@@ -1,0 +1,38 @@
+.wrapper, .selectedWrapper {
+    width: 20px;
+    height: calc(100% - 12px);
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    border: 1px dashed;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.wrapper {
+    color: gray;
+}
+
+.selectedWrapper {
+    opacity: 1;
+    color: #80ff72;
+}
+
+.wrapper:active {
+    opacity: 0.2;
+}
+
+.number {
+    font-weight: 700;
+}
+
+.month {
+    opacity: 0.8;
+}

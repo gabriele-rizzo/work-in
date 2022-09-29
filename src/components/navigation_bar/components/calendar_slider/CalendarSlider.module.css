@@ -1,0 +1,44 @@
+.mainWrapper {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.wrapper {
+    margin-bottom: 10px;
+    -webkit-mask-image: linear-gradient(to right, 
+        rgba(0,0,0,0) 0px,
+        rgba(0,0,0,1) calc(100vw / 6),
+        rgba(0,0,0,1) calc(100% - (calc(100vw / 4))),
+        rgba(0,0,0,0) 100%
+    );
+    mask-image: linear-gradient(to right, 
+        rgba(0,0,0,0) 0px,
+        rgba(0,0,0,1) calc(100vw / 6),
+        rgba(0,0,0,1) calc(100% - (calc(100vw / 4))),
+        rgba(0,0,0,0) 100%
+    );
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.iconWrapper {
+    position: absolute;
+    width: calc(100vw - (100vw / 15) * 2);
+    height: 45px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-top: 5px;
+    pointer-events: none;
+}
+
+.leftIcon, .rightIcon {
+    cursor: pointer;
+    pointer-events: initial;
+}
+
+.leftIcon:active, .rightIcon:active {
+    opacity: 0.2;
+}

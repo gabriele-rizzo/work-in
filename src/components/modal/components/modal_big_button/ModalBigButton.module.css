@@ -1,0 +1,15 @@
+.wrapper {
+    width: calc(100% * 0.7);
+    height: 50px;
+    border: none;
+    background-color: #80ff72;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(29, 29, 31);
+}
+
+.wrapper:active {
+    opacity: 0.2;
+}
