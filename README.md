@@ -1,3 +1,5 @@
+<br>
+
 <!-- LOGO -->
 <p align="center">
     <a href="https://www.google.com">
@@ -24,8 +26,6 @@
     <img src="https://img.shields.io/github/forks/RizzoGR/work-in" alt="Forks Badge">
 </p>
 
-<br>
-
 # How to use
 
 - Create a new session:
@@ -36,8 +36,6 @@
 
 - Delete a session:
 > DELETE SESSION VIDEO
-
-<br>
 
 # Build from source
 
@@ -57,8 +55,21 @@
 
     Result should be in the 'build' folder in the root of the project.
 
-# License
+# Testing
 
+### Clone the repository:
+    
+    git clone https://github.com/RizzoGR/work-in.git
+
+### Navigate into the directory created after the cloning:
+
+    cd work-in
+
+### Start development server with __npm__:
+
+    npm start
+
+# License
 
 <a href="https://github.com/RizzoGR/work-in/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/RizzoGR/work-in" alt="License Badge">
