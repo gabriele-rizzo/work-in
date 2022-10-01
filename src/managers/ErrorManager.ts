@@ -1,14 +1,16 @@
-class ErrorManager {
+export default class ErrorManager {
 
-    private message: string | undefined
+    private setShowingError: React.Dispatch<React.SetStateAction<boolean>>
+    private setErrorMessage: React.Dispatch<React.SetStateAction<string>>
 
-    constructor() {
+    constructor(setShowingError: React.Dispatch<React.SetStateAction<boolean>>, setErrorMessage: React.Dispatch<React.SetStateAction<string>>) {
+        this.setShowingError = setShowingError
+        this.setErrorMessage = setErrorMessage
     }
 
     addError(message: string) {
-        this.message = message
-        alert(message)
+        this.setErrorMessage(message)
+        this.setShowingError(true)
+        setTimeout(() => this.setShowingError(false), 3000)
     }
 }
-
-export default ErrorManager

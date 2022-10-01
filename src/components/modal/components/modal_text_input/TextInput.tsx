@@ -46,5 +46,8 @@ export default function TextInput({
         placeholder={title}
         value={text}
         type={type !== undefined ? type : "text" }
+        style={{
+            inputSecurity: "none"
+        }}
     />
 }

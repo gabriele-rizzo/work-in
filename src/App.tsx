@@ -10,17 +10,19 @@ import { useState, useEffect } from "react"
 import useStateRef from "react-usestateref"
 
 // INTERFACES
-import { Session, Size } from "./interfaces"
+import { Session, Size, SessionDict } from "./interfaces"
 
 // MANAGERS
 import FirebaseManager from "./managers/FirebaseManager"
-
-type SessionDict = { [date: string]: Session }
+import SignUpModal from "./components/modals/SignUpModal"
+import Error from "./components/error/Error"
+import ErrorManager from "./managers/ErrorManager"
 
 export default function App() {
     // MODALS
     const [showingAddSessionModal, setShowingAddSessionModal] = useState(false)
     const [showingLogInModal, setShowingLogInModal] = useState(false)
+    const [showingSignUpModal, setShowingSignUpModal] = useState(false)
 
     // WINDOW RESIZING SYSTEM
     const [windowSize, setWindowSize] = useState<Size>({ width: window.innerWidth, height: window.innerHeight })
@@ -41,32 +43,35 @@ export default function App() {
     
     // SESSIONS
     const [sessions, setSessions, sessionsRef] = useStateRef<SessionDict>({})
-    function addSession(session: Session, date: string): void {
-        let sessionsTemp = sessionsRef.current
-        sessionsTemp[date] = session
-        setSessions(sessionsTemp)
-    }
     function todaySession(): Session | undefined { return sessions[buildDateString(new Date(selectedDateRef.current))] }
     
     // DATE MANAGEMENT SYSTEM
     const [selectedDate, setSelectedDate, selectedDateRef] = useStateRef(Date.now())
-    function buildDateString(date: Date) { return `${date.getUTCMonth() + 1}/${date.getDate()}/${date.getUTCFullYear()}` }
+    function buildDateString(date: Date) { return `${date.getUTCMonth() + 1}-${date.getDate()}-${date.getUTCFullYear()}` }
+
+    // ERROR SYSTEM
+    const [showingError, setShowingError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+    const errorManager = new ErrorManager(setShowingError, setErrorMessage)
 
     // FIREBASE MANAGER
-    const firebaseManager = new FirebaseManager()
-    const [loggedIn, setLoggedIn] = useState(firebaseManager.auth.currentUser !== null)
+    const [loggedIn, setLoggedIn] = useState(false)
+    const firebaseManager = new FirebaseManager(errorManager, setSessions, setLoggedIn)
 
-    // AUTH MANAGEMENT SYSTEM
-    function logIn(email: string, password: string) { firebaseManager.logIn(email, password, setLoggedIn) }
-    function logOut() { firebaseManager.logOut(setLoggedIn) }
-    function signUp(email: string, password: string) { firebaseManager.signUp(email, password, setLoggedIn) }
+    // PERSISTENCE
+    useEffect(() => firebaseManager.setLogInPersistence(), [])
 
     return (
         <>
+            <Error
+                showed={showingError}
+                setShowed={setShowingError}
+                errorMessage={errorMessage}
+            />
             <AddSessionModal
                 smartphoneView={smartphoneView()}
                 selectedDate={selectedDateRef.current}
-                addSession={addSession}
+                addSession={(session: Session, date: string) => firebaseManager.addSession(session, date)}
                 buildDateString={buildDateString}
                 showed={showingAddSessionModal}
                 setShowed={setShowingAddSessionModal}
@@ -75,7 +80,15 @@ export default function App() {
                 smartphoneView={smartphoneView()}
                 showed={showingLogInModal}
                 setShowed={setShowingLogInModal}
-                logIn={logIn}
+                logIn={(email: string, password: string) => firebaseManager.logIn(email, password)}
+                setShowingSignUpModal={setShowingSignUpModal}
+            />
+            <SignUpModal
+                smartphoneView={smartphoneView()}
+                showed={showingSignUpModal}
+                setShowed={setShowingSignUpModal}
+                signUp={(email: string, password: string) => firebaseManager.signUp(email, password)}
+                setShowingLogInModal={setShowingLogInModal}
             />
             <NavigationBar
                 setShowingAddSessionModal={setShowingAddSessionModal}
@@ -85,9 +98,9 @@ export default function App() {
                 setSelectedDate={setSelectedDate}
                 windowSize={windowSize}
                 loggedIn={loggedIn}
-                logIn={logIn}
-                logOut={logOut}
-                signUp={signUp}
+                logIn={(email: string, password: string) => firebaseManager.logIn(email, password)}
+                logOut={() => firebaseManager.logOut()}
+                signUp={(email: string, password: string) => firebaseManager.signUp(email, password)}
                 user={firebaseManager.auth.currentUser}
             />
             <Body

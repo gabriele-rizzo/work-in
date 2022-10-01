@@ -20,3 +20,5 @@ interface Sets {
     total: number
     completed: number
 }
+
+export interface SessionDict { [date: string]: Session }

@@ -14,21 +14,21 @@ interface Props {
     // SHOWING MODAL SYSTEM
     showed: boolean
     setShowed: React.Dispatch<React.SetStateAction<boolean>>
-    setShowingSignUpModal: React.Dispatch<React.SetStateAction<boolean>>
+    setShowingLogInModal: React.Dispatch<React.SetStateAction<boolean>>
 
     // AUTH MANAGEMENT SYSTEM
-    logIn: (email: string, password: string) => void
+    signUp: (email: string, password: string) => void
 }
 
-export default function LogInModal({
+export default function SignUpModal({
     // WINDOW RESIZING SYSTEM
     smartphoneView,
 
     // SHOWING MODAL SYSTEM
-    showed, setShowed, setShowingSignUpModal,
+    showed, setShowed, setShowingLogInModal,
 
     // AUTH MANAGEMENT SYSTEM
-    logIn
+    signUp
 }: Props) {
     // TEXT INPUT MANAGEMENT
     const [email, setEmail, emailRef] = useStateRef<string>("")
@@ -41,7 +41,7 @@ export default function LogInModal({
                 setEmail("")
                 setPassword("")
             }}
-            title="Log In"
+            title="Sign Up"
             showed={showed}
             setShowed={setShowed}
         >
@@ -59,18 +59,18 @@ export default function LogInModal({
                 type="password"
             />
             <ModalBigButton
-                title="Log In"
+                title="Sign Up"
                 onClick={() => {
                     setShowed(false)
-                    logIn(emailRef.current, passwordRef.current)
+                    signUp(emailRef.current, passwordRef.current)
                 }}
             />
             <PageRoutingText
-                text="If you still don't have an account"
-                buttonText="Sign Up"
+                text="If you already have an account"
+                buttonText="Log In"
                 onClick={() => {
                     setShowed(false)
-                    setShowingSignUpModal(true)
+                    setShowingLogInModal(true)
                 }}
             />
         </Modal>

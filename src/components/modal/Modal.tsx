@@ -49,10 +49,15 @@ export default function Modal({
 
     // GET TITLE BAR HEIGHT
     function getTitleBarHeight(): number {
-        let titleBar = document.getElementsByClassName(classes.actions)[0]
-
-        if (titleBar !== undefined && titleBar !== null) {
-            return (titleBar.clientHeight | titleBar.scrollHeight) + 1
+        if (!smartphoneView) {
+            let modalIndex = title === "Add Session" ? 0 : title === "Log In" ? 1 : 2
+            let titleBar = document.getElementsByClassName(classes.actions)[modalIndex]
+               
+            if (titleBar !== undefined && titleBar !== null) {
+                return (titleBar.clientHeight | titleBar.scrollHeight) + 1
+            } else {
+                return 0
+            }
         } else {
             return 0
         }

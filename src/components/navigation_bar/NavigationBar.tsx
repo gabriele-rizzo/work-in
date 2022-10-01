@@ -1,12 +1,12 @@
 // RESOURCES
 import classes from "./NavigationBar.module.css"
-import logo from "../../logo.png"
+import logo from "../../assets/logo.png"
 
 // COMPONENTS
 import Separator from "./components/separator/Separator"
 import CalendarSlider from "./components/calendar_slider/CalendarSlider"
 import NavigationBarItem from "./components/navigation_bar_item/NavigationBarItem"
-import { IoAddCircle, IoPersonCircle } from "react-icons/io5"
+import { IoAddCircle, IoPersonAdd, IoPersonRemove } from "react-icons/io5"
 
 // INTERFACES
 import { Size } from "../../interfaces"
@@ -52,34 +52,38 @@ export default function NavigationBar({
         <div className={classes.wrapper}>
             <div
                 className={classes.main}
-                >
+            >
                 <div className={classes.logoWrapper}>
                     <img src={logo} alt="logo" className={classes.logo} />
                     <h1 className={classes.title}>Work-in</h1>
                 </div>
                 <div className={classes.itemsWrapper}>
                     <NavigationBarItem
-                        icon={<IoPersonCircle
-                            color="#80ff72"
-                            lightingColor="red"
-                            size={smartphoneView ? 30 : 23}
-                        />}
+                        icon={
+                            loggedIn
+                                ? <IoPersonRemove
+                                    color="#80ff72"
+                                    lightingColor="red"
+                                    size={smartphoneView ? 30 : 23}
+                                />
+                                : <IoPersonAdd
+                                    color="#80ff72"
+                                    lightingColor="red"
+                                    size={smartphoneView ? 30 : 23}
+                                />
+                        }
                         onClick={() => {
-                            if (loggedIn) {
-                                // SHOW USER PAGE
-                                alert("NavigationBar.tsx: line 70 -> show user page")
-                            } else {
-                                // SHOW LOGIN PAGE
-                                setShowingLogInModal(true)
-                            }
+                            if (loggedIn) logOut()
+                            else setShowingLogInModal(true)
                         }}
-                        label={loggedIn 
-                            ? user !== null
-                                ? user.displayName !== null
-                                    ? user.displayName
-                                    : "Account"
+                        label={
+                            loggedIn
+                                ? user !== null
+                                    ? user.displayName !== null
+                                        ? user.displayName
+                                        : "Log Out"
+                                    : "Log In"
                                 : "Log In"
-                            : "Log In"
                         }
                         smartphoneView={smartphoneView}
                     />
